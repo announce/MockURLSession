@@ -16,7 +16,7 @@ class MockURLSessionTests: XCTestCase {
         }
     }
     let endpoint = NSURL(string: "https://example.com/foo/bar")!
-    let fixture = Fixture.read("sample_data")
+    let sampleData = "Foo 123".dataUsingEncoding(NSUTF8StringEncoding)!
     var subject: MockURLSession!
     
     override func setUp() {
@@ -33,9 +33,9 @@ class MockURLSessionTests: XCTestCase {
     }
     
     func testTarget() {
-        subject.setupMockResponse(endpoint, data: fixture)
+        subject.registerMockResponse(endpoint, data: sampleData)
         subject.dataTaskWithURL(endpoint) { (data: NSData?, response: NSURLResponse?, error: NSError?) in
-            XCTAssertEqual(self.fixture, data)
+            XCTAssertEqual(self.sampleData, data)
             XCTAssertNotNil(response)
             XCTAssertNil(error)
             XCTAssertNotNil(self.subject.resumedResponse(self.endpoint))
@@ -51,4 +51,13 @@ class MockURLSessionTests: XCTestCase {
         testTarget()
         XCTAssertTrue(subject.normalizer is CustomNormalizer)
     }
+    
+    func testNoResponseRegistered() {
+        subject.dataTaskWithURL(endpoint) { (data: NSData?, response: NSURLResponse?, error: NSError?) in
+            XCTAssertNil(data)
+            XCTAssertNil(response)
+            XCTAssertEqual(MockURLSession.Error.Code.NoResponseRegistered.rawValue, error?.code)
+        }.resume()
+    }
+    
 }

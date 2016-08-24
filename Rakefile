@@ -5,7 +5,6 @@ namespace :lib do
   task :build_test do
     sh %q(
       xcodebuild test \
-        -workspace MockURLSession.xcworkspace \
         -scheme MockURLSession \
         -sdk iphonesimulator
     )

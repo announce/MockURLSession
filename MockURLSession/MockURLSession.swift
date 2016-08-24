@@ -18,7 +18,15 @@ public class MockURLSession: NSURLSession {
     public typealias Response = (data: NSData?, urlResponse: NSURLResponse?, error: NSError?)
     public typealias HttpHeadersField = [String : String]
     
+    public static let bundleId = NSBundle(forClass: sharedInstance.dynamicType).bundleIdentifier!
     private static let sharedInstance = MockURLSession()
+    
+    public struct Error {
+        static let Domain: String = MockURLSession.bundleId
+        enum Code: Int {
+            case NoResponseRegistered = 4000
+        }
+    }
     
     public var responses: [NSURL: Response] = [:]
     public var tasks: [NSURL: MockURLSessionDataTask] = [:]
@@ -31,7 +39,14 @@ public class MockURLSession: NSURLSession {
     
     public override func dataTaskWithURL(url: NSURL, completionHandler: CompletionHandler) -> NSURLSessionDataTask {
         let normalizedUrl = normalizer.normalizeUrl(url)
-        let task = MockURLSessionDataTask(response: responses[normalizedUrl]!,
+        let response = responses[normalizedUrl] ?? (
+            data:nil,
+            urlResponse: nil,
+            error: NSError(
+                domain: Error.Domain,
+                code: Error.Code.NoResponseRegistered.rawValue,
+                userInfo: [NSLocalizedDescriptionKey: "No mocked response found by '\(normalizedUrl)'."]))
+        let task = MockURLSessionDataTask(response: response,
                                           completionHandler: completionHandler)
         tasks[normalizedUrl] = task
         return task
@@ -68,7 +83,7 @@ public class MockURLSession: NSURLSession {
     }
     
     // MARK: - Helpers
-    public func setupMockResponse(url: NSURL,
+    public func registerMockResponse(url: NSURL,
                                   data: NSData,
                                   statusCode: Int = 200,
                                   httpVersion: String? = nil,
