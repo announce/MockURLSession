@@ -10,27 +10,45 @@ import XCTest
 @testable import MockURLSession
 
 class MockURLSessionTests: XCTestCase {
+    class CustomNormalizer: MockURLSessionNormalizer {
+        func normalizeUrl(url: NSURL) -> NSURL {
+            return (NSURLComponents(URL: url, resolvingAgainstBaseURL: true)?.URL)!
+        }
+    }
+    let endpoint = NSURL(string: "https://example.com/foo/bar")!
+    let fixture = Fixture.read("sample_data")
+    var subject: MockURLSession!
     
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        subject = MockURLSession()
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testSharedSession() {
+        XCTAssertEqual(MockURLSession.sharedSession(), MockURLSession.sharedSession())
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock {
-            // Put the code you want to measure the time of here.
-        }
+    func testTarget() {
+        subject.setupMockResponse(endpoint, data: fixture)
+        subject.dataTaskWithURL(endpoint) { (data: NSData?, response: NSURLResponse?, error: NSError?) in
+            XCTAssertEqual(self.fixture, data)
+            XCTAssertNotNil(response)
+            XCTAssertNil(error)
+            XCTAssertNotNil(self.subject.resumedResponse(self.endpoint))
+        }.resume()
     }
     
+    func testDefault() {
+        XCTAssertTrue(subject.normalizer is MockURLSession.DefaultNormalizer)
+    }
+    
+    func testNormalizer() {
+        subject.normalizer = CustomNormalizer()
+        testTarget()
+        XCTAssertTrue(subject.normalizer is CustomNormalizer)
+    }
 }
