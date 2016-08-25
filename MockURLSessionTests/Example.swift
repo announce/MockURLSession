@@ -59,7 +59,7 @@ class Example: XCTestCase {
             }
         }
         // Note that you should setup the normalizer before registering mocked response
-        let data = NSKeyedArchiver.archivedDataWithRootObject(["user": "abc", "age": 20])
+        let data = NSKeyedArchiver.archivedDataWithRootObject(["username": "abc", "age": 20])
         let session = MockURLSession()
         session.normalizer = Normalizer()
         session.registerMockResponse(MyApp.apiUrl, data:data)

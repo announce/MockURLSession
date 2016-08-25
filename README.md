@@ -4,6 +4,8 @@ MockURLSession
 [![Build Status](https://travis-ci.org/announce/MockURLSession.svg?branch=master)](https://travis-ci.org/announce/MockURLSession)
 [![CocoaPods](https://img.shields.io/cocoapods/v/MockURLSession.svg?maxAge=2592000)](https://cocoapods.org/pods/MockURLSession)
 
+Are you a dependency injection devotee? Let's mock `NSURLSession` together.
+
 
 ## Installation
 
@@ -19,14 +21,7 @@ target 'MyAppTest' do
 	pod 'MockURLSession'
 end
 ```
-Note that this requires CocoaPods version 36, and your iOS deployment target to be at least 8.0:
-
-#### Manually (iOS 7+, OS X 10.9+)
-
-To use this library in your project manually:
-
-* for Projects, just drag MockURLSession.swift to the project tree
-* for Workspaces, include the whole MockURLSession.xcodeproj
+Note that this requires CocoaPods version 36, and your iOS deployment target to be at least 8.0.
 
 
 ## Usage
@@ -96,7 +91,7 @@ class Normalizer: MockURLSessionNormalizer {
     }
 }
 // Note that you should setup the normalizer before registering mocked response
-let data = NSKeyedArchiver.archivedDataWithRootObject(["user": "abc", "age": 20])
+let data = NSKeyedArchiver.archivedDataWithRootObject(["username": "abc", "age": 20])
 let session = MockURLSession()
 session.normalizer = Normalizer()
 session.registerMockResponse(MyApp.apiUrl, data:data)
