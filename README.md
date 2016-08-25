@@ -97,6 +97,13 @@ session.normalizer = Normalizer()
 session.registerMockResponse(MyApp.apiUrl, data:data)
 ```
 
+## Disclosure
+
+#### Inspirations
+
+* This module is inspired from the entry [*Mocking Classes You Don't Own · Masilotti\.com*](http://masilotti.com/testing-nsurlsession-input/#comment-2493597339) and its comments.
+
+
 ## Development tips
 
 #### Long way to bump up spec version
