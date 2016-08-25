@@ -12,10 +12,7 @@
 		C53646921D6D556900CA9813 /* MockURLSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53646911D6D556900CA9813 /* MockURLSessionTests.swift */; };
 		C536469D1D6D55B100CA9813 /* MockURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C536469C1D6D55B100CA9813 /* MockURLSession.swift */; };
 		C536469E1D6D55B100CA9813 /* MockURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C536469C1D6D55B100CA9813 /* MockURLSession.swift */; };
-		C53646A01D6D99A500CA9813 /* sample_data.json in Resources */ = {isa = PBXBuildFile; fileRef = C536469F1D6D99A500CA9813 /* sample_data.json */; };
-		C53646A11D6D99A500CA9813 /* sample_data.json in Resources */ = {isa = PBXBuildFile; fileRef = C536469F1D6D99A500CA9813 /* sample_data.json */; };
-		C53646A31D6D99B900CA9813 /* Fixture.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53646A21D6D99B900CA9813 /* Fixture.swift */; };
-		C53646A41D6D99B900CA9813 /* Fixture.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53646A21D6D99B900CA9813 /* Fixture.swift */; };
+		C53646A71D6DF96E00CA9813 /* Example.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53646A61D6DF96E00CA9813 /* Example.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,8 +33,7 @@
 		C53646911D6D556900CA9813 /* MockURLSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLSessionTests.swift; sourceTree = "<group>"; };
 		C53646931D6D556900CA9813 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C536469C1D6D55B100CA9813 /* MockURLSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockURLSession.swift; sourceTree = "<group>"; };
-		C536469F1D6D99A500CA9813 /* sample_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_data.json; sourceTree = "<group>"; };
-		C53646A21D6D99B900CA9813 /* Fixture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fixture.swift; sourceTree = "<group>"; };
+		C53646A61D6DF96E00CA9813 /* Example.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Example.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,9 +87,8 @@
 			isa = PBXGroup;
 			children = (
 				C53646911D6D556900CA9813 /* MockURLSessionTests.swift */,
+				C53646A61D6DF96E00CA9813 /* Example.swift */,
 				C53646931D6D556900CA9813 /* Info.plist */,
-				C536469F1D6D99A500CA9813 /* sample_data.json */,
-				C53646A21D6D99B900CA9813 /* Fixture.swift */,
 			);
 			path = MockURLSessionTests;
 			sourceTree = "<group>";
@@ -189,7 +184,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C53646A01D6D99A500CA9813 /* sample_data.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,7 +191,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C53646A11D6D99A500CA9813 /* sample_data.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,7 +202,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C536469D1D6D55B100CA9813 /* MockURLSession.swift in Sources */,
-				C53646A31D6D99B900CA9813 /* Fixture.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -219,7 +211,7 @@
 			files = (
 				C536469E1D6D55B100CA9813 /* MockURLSession.swift in Sources */,
 				C53646921D6D556900CA9813 /* MockURLSessionTests.swift in Sources */,
-				C53646A41D6D99B900CA9813 /* Fixture.swift in Sources */,
+				C53646A71D6DF96E00CA9813 /* Example.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -399,6 +391,7 @@
 				C53646981D6D556900CA9813 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C53646991D6D556900CA9813 /* Build configuration list for PBXNativeTarget "MockURLSessionTests" */ = {
 			isa = XCConfigurationList;
@@ -407,6 +400,7 @@
 				C536469B1D6D556900CA9813 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
