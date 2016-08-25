@@ -1,6 +1,6 @@
 task default: %w[test]
 
-task :test: [:test_osx, :test_ios, :test_tvos]
+task test: [:test_osx, :test_ios, :test_tvos]
 
 task :test_osx do
   sh %q(
