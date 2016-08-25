@@ -1,8 +1,4 @@
-os: osx
-osx_image: xcode7.3
 language: objective-c
+osx_image: xcode7.3
 before_install: bundle install
 script: rake | xcpretty
-cache:
-  - bundler
-  - cocoapods
