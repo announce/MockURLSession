@@ -34,6 +34,7 @@ class MockURLSessionTests: XCTestCase {
     
     func testTarget() {
         subject.registerMockResponse(endpoint, data: sampleData)
+        XCTAssertNil(subject.resumedResponse(endpoint))
         subject.dataTaskWithURL(endpoint) { (data: NSData?, response: NSURLResponse?, error: NSError?) in
             XCTAssertEqual(self.sampleData, data)
             XCTAssertNotNil(response)
