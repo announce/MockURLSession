@@ -102,4 +102,4 @@ session.registerMockResponse(MyApp.apiUrl, data:data)
 #### Long way to bump up spec version
 1. Xcode: MockURLSession > Identity > Version
 1. Pod: `s.version` in *MockURLSession.podspec*
-1. Git: `git tag 1.0.0`
+1. Git: `git tag 1.0.0 && git push origin --tags`
