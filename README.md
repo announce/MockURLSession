@@ -40,7 +40,7 @@ class MyApp {
         self.session = session
     }
     func doSomething() {
-        session.dataTaskWithURL(MyApp.apiUrl) { (data: NSData?, _: NSURLResponse?, error: NSError?) in
+        session.dataTaskWithURL(MyApp.apiUrl) { (data, _, error) in
             self.data = data
             self.error = error
         }.resume()
