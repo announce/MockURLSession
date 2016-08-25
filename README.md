@@ -33,7 +33,7 @@ To use this library in your project manually:
 
 #### Quick glance
 
-Let's take the case to test `MyApp` below.
+Let's take a case to test `MyApp` below.
 
 ```swift
 class MyApp {
@@ -59,7 +59,7 @@ In the test code,
 import MockURLSession
 ```
 
-and write testing by any flamewrork you prefer sush as XCTest (Written by `print` here).
+and write testing by any flamewrorks you prefer sush as XCTest (Written by `print` here).
 
 ```swift
 // Initialization
@@ -85,7 +85,7 @@ print(session.resumedResponse(MyApp.apiUrl) != nil)  // true
 #### URL matching customization
 
 ```swift
-// Customize URL mathing logic if you prefer
+// Customize URL matching logic if you prefer
 class Normalizer: MockURLSessionNormalizer {
     func normalizeUrl(url: NSURL) -> NSURL {
         // Fuzzy matching example
@@ -101,3 +101,10 @@ let session = MockURLSession()
 session.normalizer = Normalizer()
 session.registerMockResponse(MyApp.apiUrl, data:data)
 ```
+
+## Development tips
+
+#### Long way to bump up spec version
+1. Xcode: MockURLSession > Identity > Version
+1. Pod: `s.version` in *MockURLSession.podspec*
+1. Git: `git tag 1.0.0`
