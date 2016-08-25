@@ -2,7 +2,7 @@ MockURLSession
 ===
 
 [![Build Status](https://travis-ci.org/announce/MockURLSession.svg?branch=master)](https://travis-ci.org/announce/MockURLSession)
-[![CocoaPods](https://img.shields.io/cocoapods/v/MockURLSession.svg?maxAge=2592000)](https://cocoapods.org/pods/MockURLSession)
+[![CocoaPods](https://img.shields.io/cocoapods/v/MockURLSession.svg)](https://cocoapods.org/pods/MockURLSession)
 
 Are you a dependency injection devotee? Let's mock `NSURLSession` together.
 
