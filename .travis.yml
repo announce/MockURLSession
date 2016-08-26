@@ -1,4 +1,6 @@
 language: objective-c
 osx_image: xcode7.3
 before_install: bundle install
-script: rake | xcpretty
+script:
+  - rake | xcpretty
+  - pod lib lint
