@@ -69,4 +69,3 @@ fastlane/test_output
 !/.editorconfig
 !/.gitignore
 !/.travis.yml
-!/.cocoadocs.yml

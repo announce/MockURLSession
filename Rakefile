@@ -1,6 +1,13 @@
 task default: %w[test]
 
-task test: [:test_osx, :test_ios, :test_tvos]
+task test: [
+  :set_options,
+  :test_ios,
+]
+
+task :set_options do
+  sh %q(set -o pipefail)
+end
 
 task :test_osx do
   sh %q(
@@ -14,13 +21,5 @@ task :test_ios do
     xcodebuild test \
       -scheme MockURLSession \
       -destination 'platform=iOS Simulator,name=iPhone 6'
-  )
-end
-
-task :test_tvos do
-  sh %q(
-    xcodebuild test \
-      -scheme MockURLSession \
-      -destination 'platform=tvOS Simulator,name=Apple TV 1080p'
   )
 end
