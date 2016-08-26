@@ -18,7 +18,7 @@ public class MockURLSession: NSURLSession {
     public typealias Response = (data: NSData?, urlResponse: NSURLResponse?, error: NSError?)
     public typealias HttpHeadersField = [String : String]
     
-    public static let bundleId = NSBundle(forClass: sharedInstance.dynamicType).bundleIdentifier!
+    public static let bundleId = NSBundle(forClass: sharedInstance.dynamicType).bundleIdentifier ?? "MockURLSession"
     private static let sharedInstance = MockURLSession()
     
     public struct Error {
