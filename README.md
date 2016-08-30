@@ -7,6 +7,13 @@ MockURLSession
 Are you a dependency injection devotee? Let's mock `NSURLSession` together.
 
 
+## Features
+
+* No need to modify production code to mock `NSURLSession`
+* Customizable URL matching logic to mock responses
+* Testable that the mocked responses are surely called
+
+
 ## Installation
 
 #### CocoaPods (iOS 8+, OS X 10.9+)
