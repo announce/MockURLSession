@@ -7,11 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		38DC5E381F982371002F9823 /* MockURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DC5E371F982371002F9823 /* MockURLSession.swift */; };
 		C53646861D6D556900CA9813 /* MockURLSession.h in Headers */ = {isa = PBXBuildFile; fileRef = C53646851D6D556900CA9813 /* MockURLSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C536468D1D6D556900CA9813 /* MockURLSession.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53646821D6D556900CA9813 /* MockURLSession.framework */; };
 		C53646921D6D556900CA9813 /* MockURLSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53646911D6D556900CA9813 /* MockURLSessionTests.swift */; };
-		C536469D1D6D55B100CA9813 /* MockURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C536469C1D6D55B100CA9813 /* MockURLSession.swift */; };
-		C536469E1D6D55B100CA9813 /* MockURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C536469C1D6D55B100CA9813 /* MockURLSession.swift */; };
 		C53646A71D6DF96E00CA9813 /* Example.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53646A61D6DF96E00CA9813 /* Example.swift */; };
 /* End PBXBuildFile section */
 
@@ -26,13 +25,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		38DC5E371F982371002F9823 /* MockURLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLSession.swift; sourceTree = "<group>"; };
 		C53646821D6D556900CA9813 /* MockURLSession.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MockURLSession.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C53646851D6D556900CA9813 /* MockURLSession.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MockURLSession.h; sourceTree = "<group>"; };
 		C53646871D6D556900CA9813 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C536468C1D6D556900CA9813 /* MockURLSessionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MockURLSessionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C53646911D6D556900CA9813 /* MockURLSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLSessionTests.swift; sourceTree = "<group>"; };
 		C53646931D6D556900CA9813 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C536469C1D6D55B100CA9813 /* MockURLSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockURLSession.swift; sourceTree = "<group>"; };
 		C53646A61D6DF96E00CA9813 /* Example.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Example.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -78,7 +77,7 @@
 			children = (
 				C53646851D6D556900CA9813 /* MockURLSession.h */,
 				C53646871D6D556900CA9813 /* Info.plist */,
-				C536469C1D6D55B100CA9813 /* MockURLSession.swift */,
+				38DC5E371F982371002F9823 /* MockURLSession.swift */,
 			);
 			path = MockURLSession;
 			sourceTree = "<group>";
@@ -155,6 +154,7 @@
 				TargetAttributes = {
 					C53646811D6D556900CA9813 = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0900;
 					};
 					C536468B1D6D556900CA9813 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -201,7 +201,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C536469D1D6D55B100CA9813 /* MockURLSession.swift in Sources */,
+				38DC5E381F982371002F9823 /* MockURLSession.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,7 +209,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C536469E1D6D55B100CA9813 /* MockURLSession.swift in Sources */,
 				C53646921D6D556900CA9813 /* MockURLSessionTests.swift in Sources */,
 				C53646A71D6DF96E00CA9813 /* Example.swift in Sources */,
 			);
@@ -269,6 +268,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -310,6 +310,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -332,6 +333,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -349,12 +351,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.xn--nyqr7s4vc72p.MockURLSession";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
 		C536469A1D6D556900CA9813 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = MockURLSessionTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.xn--nyqr7s4vc72p.MockURLSessionTests";
@@ -365,6 +369,7 @@
 		C536469B1D6D556900CA9813 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = MockURLSessionTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.xn--nyqr7s4vc72p.MockURLSessionTests";

@@ -7,19 +7,21 @@
 //
 
 import XCTest
+@testable import MockURLSession
+
 
 class Example: XCTestCase {
 
     class MyApp {
-        static let apiUrl = NSURL(string: "https://example.com/foo/bar")!
-        let session: NSURLSession
-        var data: NSData?
-        var error: NSError?
-        init(session: NSURLSession = NSURLSession.sharedSession()) {
+        static let apiUrl = URL(string: "https://example.com/foo/bar")!
+        let session: URLSession
+        var data: Data?
+        var error: Error?
+        init(session: URLSession = URLSession.shared) {
             self.session = session
         }
         func doSomething() {
-            session.dataTaskWithURL(MyApp.apiUrl) { (data, _, error) in
+            session.dataTask(with: MyApp.apiUrl) { (data, _, error) in
                 self.data = data
                 self.error = error
             }.resume()
@@ -29,40 +31,41 @@ class Example: XCTestCase {
     func testQuickGlance() {
         // Initialization
         let session = MockURLSession()
-        // Or, use shared instance as `NSURLSession` provides
-        MockURLSession.sharedSession()
+//         Or, use shared instance as `URLSession` provides
+//        MockURLSession.sharedInstance
         
         // Setup a mock response
-        let data = "Foo 123".dataUsingEncoding(NSUTF8StringEncoding)!
-        session.registerMockResponse(MyApp.apiUrl, data:data)
+        let data = "Foo 123".data(using: .utf8)!
+        session.registerMockResponse(MyApp.apiUrl, data: data)
         
         // Inject the session to the target app code and the response will be mocked like below
         let app = MyApp(session: session)
         app.doSomething()
         
-        print(NSString(data:app.data!, encoding:NSUTF8StringEncoding)!)  // Foo 123
-        print(app.error)    // nil
+        
+        print(String(data:app.data!, encoding: .utf8)!)  // Foo 123
+        print(app.error as Any)    // nil
         
         // Make sure that the data task is resumed in the app code
         print(session.resumedResponse(MyApp.apiUrl) != nil)  // true
     }
     
     func testUrlCustomization() {
-        // Customize URL mathing logic if you prefer
+        // Customize URL matching logic if you prefer
         class Normalizer: MockURLSessionNormalizer {
-            func normalizeUrl(url: NSURL) -> NSURL {
+            func normalize(url: URL) -> URL {
                 // Fuzzy matching example
-                let components = NSURLComponents()
+                var components = URLComponents()
                 components.host = url.host
                 components.path = url.path
-                return components.URL!
+                return components.url!
             }
         }
         // Note that you should setup the normalizer before registering mocked response
-        let data = NSKeyedArchiver.archivedDataWithRootObject(["username": "abc", "age": 20])
+        let data = NSKeyedArchiver.archivedData(withRootObject: ["username": "abc", "age": 20])
         let session = MockURLSession()
         session.normalizer = Normalizer()
-        session.registerMockResponse(MyApp.apiUrl, data:data)
+        session.registerMockResponse(MyApp.apiUrl, data: data)
     }
     
 }

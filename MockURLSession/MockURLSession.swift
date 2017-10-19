@@ -5,56 +5,53 @@
 //  Created by YAMAMOTOKenta on 8/24/16.
 //  Copyright © 2016 ymkjp. All rights reserved.
 //
-
 import Foundation
 
 public protocol MockURLSessionNormalizer {
     // Normalize URL to match resources
-    func normalizeUrl(url: NSURL) -> NSURL
+    func normalize(url: URL) -> URL
 }
 
-public class MockURLSession: NSURLSession {
-    public typealias CompletionHandler = (NSData?, NSURLResponse?, NSError?) -> Void
-    public typealias Response = (data: NSData?, urlResponse: NSURLResponse?, error: NSError?)
+public class MockURLSession: URLSession {
+    public typealias CompletionHandler = (Data?, URLResponse?, Error?) -> Void
+    public typealias Response = (data: Data?, urlResponse: URLResponse?, error: Error?)
     public typealias HttpHeadersField = [String : String]
     
-    public static let bundleId = NSBundle(forClass: sharedInstance.dynamicType).bundleIdentifier ?? "org.cocoapods.pods.MockURLSession"
-    private static let sharedInstance = MockURLSession()
+    public static let bundleId = Bundle(for: MockURLSession.self).bundleIdentifier ?? "Unknown Bundle ID"
+    public static let sharedInstance = MockURLSession()
     
-    public struct Error {
+    public struct MockError: Error {
         static let Domain: String = MockURLSession.bundleId
         enum Code: Int {
             case NoResponseRegistered = 4000
         }
     }
     
-    public var responses: [NSURL: Response] = [:]
-    public var tasks: [NSURL: MockURLSessionDataTask] = [:]
+    public var responses: [URL: Response] = [:]
+    public var tasks: [URL: MockURLSessionDataTask] = [:]
     public var normalizer: MockURLSessionNormalizer = DefaultNormalizer()
     
     // MARK: - Mock methods
-    public override class func sharedSession() -> NSURLSession {
-        return MockURLSession.sharedInstance
-    }
-    
-    public override func dataTaskWithURL(url: NSURL, completionHandler: CompletionHandler) -> NSURLSessionDataTask {
-        let normalizedUrl = normalizer.normalizeUrl(url)
-        let response = responses[normalizedUrl] ?? (
-            data:nil,
+    public override func dataTask(with url: URL, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
+        let normalizedUrl = normalizer.normalize(url: url)
+        let error = NSError(domain: MockError.Domain,
+                            code: MockError.Code.NoResponseRegistered.rawValue,
+                            userInfo: [NSLocalizedDescriptionKey: "No mocked response found by '\(normalizedUrl)'."])
+        
+        
+        let response: Response = responses[normalizedUrl] ?? (
+            data: nil,
             urlResponse: nil,
-            error: NSError(
-                domain: Error.Domain,
-                code: Error.Code.NoResponseRegistered.rawValue,
-                userInfo: [NSLocalizedDescriptionKey: "No mocked response found by '\(normalizedUrl)'."]))
+            error: error)
         let task = MockURLSessionDataTask(response: response,
                                           completionHandler: completionHandler)
         tasks[normalizedUrl] = task
         return task
     }
     
-    public class MockURLSessionDataTask: NSURLSessionDataTask {
+    public class MockURLSessionDataTask: URLSessionDataTask {
         public var mockResponse: Response
-        private (set) var called: [String: Response] = [:]
+        fileprivate (set) var called: [String: Response] = [:]
         let handler: CompletionHandler?
         
         init(response: Response, completionHandler: CompletionHandler?) {
@@ -63,41 +60,41 @@ public class MockURLSession: NSURLSession {
         }
         
         public override func resume() {
-            registerCallee(mockResponse, name: "\(#function)")
+            register(callee: mockResponse, name: "\(#function)")
             handler!(mockResponse.data, mockResponse.urlResponse, mockResponse.error)
         }
         
-        public func registerCallee(value: Response, name: String) {
+        public func register(callee value: Response, name: String) {
             return called[name] = value
         }
         
-        public func callee(name: String) -> Response? {
+        public func callee(_ name: String) -> Response? {
             return called["\(name)()"]
         }
     }
     
     class DefaultNormalizer: MockURLSessionNormalizer {
-        func normalizeUrl(url: NSURL) -> NSURL {
+        func normalize(url: URL) -> URL {
             return url
         }
     }
     
     // MARK: - Helpers
-    public func registerMockResponse(url: NSURL,
-                                  data: NSData,
-                                  statusCode: Int = 200,
-                                  httpVersion: String? = nil,
-                                  headerFields: HttpHeadersField? = nil,
-                                  error: NSError? = nil) -> Response? {
-        let urlResponse = NSHTTPURLResponse(URL: url,
-                                            statusCode: statusCode,
-                                            HTTPVersion: httpVersion,
+    public func registerMockResponse(_ url: URL,
+                                     data: Data,
+                                     statusCode: Int = 200,
+                                     httpVersion: String? = nil,
+                                     headerFields: HttpHeadersField? = nil,
+                                     error: MockError? = nil) -> Response? {
+        let urlResponse = HTTPURLResponse(url: url,
+                                          statusCode: statusCode,
+                                          httpVersion: httpVersion,
                                             headerFields: headerFields)
         return responses.updateValue((data: data, urlResponse: urlResponse, error: error),
-                                     forKey: normalizer.normalizeUrl(url))
+                                     forKey: normalizer.normalize(url: url))
     }
     
-    public func resumedResponse(url: NSURL, methodName: String = "resume") -> Response? {
-        return tasks[normalizer.normalizeUrl(url)]?.callee(methodName)
+    public func resumedResponse(_ url: URL, methodName: String = "resume") -> Response? {
+        return tasks[normalizer.normalize(url: url)]?.callee(methodName)
     }
 }

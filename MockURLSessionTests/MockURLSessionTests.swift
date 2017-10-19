@@ -11,12 +11,12 @@ import XCTest
 
 class MockURLSessionTests: XCTestCase {
     class CustomNormalizer: MockURLSessionNormalizer {
-        func normalizeUrl(url: NSURL) -> NSURL {
-            return (NSURLComponents(URL: url, resolvingAgainstBaseURL: true)?.URL)!
+        func normalize(url: URL) -> URL {
+            return (URLComponents(url: url, resolvingAgainstBaseURL: true)?.url)!
         }
     }
-    let endpoint = NSURL(string: "https://example.com/foo/bar")!
-    let sampleData = "Foo 123".dataUsingEncoding(NSUTF8StringEncoding)!
+    let endpoint = URL(string: "https://example.com/foo/bar")!
+    let sampleData = "Foo 123".data(using: .utf8)!
     var subject: MockURLSession!
     
     override func setUp() {
@@ -29,13 +29,13 @@ class MockURLSessionTests: XCTestCase {
     }
     
     func testSharedSession() {
-        XCTAssertEqual(MockURLSession.sharedSession(), MockURLSession.sharedSession())
+        XCTAssertEqual(MockURLSession.sharedInstance, MockURLSession.sharedInstance)
     }
     
     func testTarget() {
         subject.registerMockResponse(endpoint, data: sampleData)
         XCTAssertNil(subject.resumedResponse(endpoint))
-        subject.dataTaskWithURL(endpoint) { (data: NSData?, response: NSURLResponse?, error: NSError?) in
+        subject.dataTask(with: endpoint) { (data: Data?, response: URLResponse?, error: Error?) in
             XCTAssertEqual(self.sampleData, data)
             XCTAssertNotNil(response)
             XCTAssertNil(error)
@@ -54,10 +54,10 @@ class MockURLSessionTests: XCTestCase {
     }
     
     func testNoResponseRegistered() {
-        subject.dataTaskWithURL(endpoint) { (data: NSData?, response: NSURLResponse?, error: NSError?) in
+        subject.dataTask(with: endpoint) { (data: Data?, response: URLResponse?, error: Error?) in
             XCTAssertNil(data)
             XCTAssertNil(response)
-            XCTAssertEqual(MockURLSession.Error.Code.NoResponseRegistered.rawValue, error?.code)
+            XCTAssertEqual(MockURLSession.MockError.Code.NoResponseRegistered.rawValue, ((error as NSError?)?.code))
         }.resume()
     }
     
