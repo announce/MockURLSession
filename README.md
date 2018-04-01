@@ -127,4 +127,4 @@ bundle exec rake
 1. Xcode: MockURLSession > Identity > Version
 1. Pod: `s.version` in *MockURLSession.podspec*
 1. Git: `git tag 2.x.x && git push origin --tag`
-1. Release by `pod trunk push MockURLSession.podspec`
+1. Release by `bundle exec pod trunk push MockURLSession.podspec`
