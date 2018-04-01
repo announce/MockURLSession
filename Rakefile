@@ -3,17 +3,11 @@ task default: %w[test]
 task test: [
   :set_options,
   :test_ios,
+  :pod_lint,
 ]
 
 task :set_options do
   sh %q(set -o pipefail)
-end
-
-task :test_osx do
-  sh %q(
-    xcodebuild test \
-      -scheme MockURLSession
-  )
 end
 
 task :test_ios do
@@ -21,5 +15,11 @@ task :test_ios do
     xcodebuild test \
       -scheme MockURLSession \
       -destination 'platform=iOS Simulator,name=iPhone 6'
+  )
+end
+
+task :pod_lint do
+  sh %q(
+    pod lib lint
   )
 end

@@ -2,5 +2,5 @@ language: objective-c
 osx_image: xcode9.2
 before_install: bundle install
 script:
-  - rake | xcpretty
-  - pod lib lint
+  - set -o pipefail
+  - rake | xcpretty -f `xcpretty-travis-formatter`
