@@ -80,6 +80,7 @@ public class MockURLSession: URLSession {
     }
     
     // MARK: - Helpers
+    @discardableResult
     public func registerMockResponse(_ url: URL,
                                      data: Data,
                                      statusCode: Int = 200,

@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name          = "MockURLSession"
-  s.version       = "1.0.0"
+  s.version       = "2.0.0"
   s.summary       = "MockURLSession provides a way to mock NSURLSession."
   s.homepage      = "https://github.com/announce/MockURLSession"
   s.license       = { :type => "MIT" }

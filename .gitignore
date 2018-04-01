@@ -64,8 +64,15 @@ fastlane/Preview.html
 fastlane/screenshots
 fastlane/test_output
 
+# Environment normalization:
+/.bundle/
+/vendor/bundle
+/lib/bundler/man/
+!.ruby-version
+
 # Project
 !/.github/
 !/.editorconfig
 !/.gitignore
 !/.travis.yml
+!/.swift-version

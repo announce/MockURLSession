@@ -4,12 +4,12 @@ MockURLSession
 [![Build Status](https://travis-ci.org/announce/MockURLSession.svg?branch=master)](https://travis-ci.org/announce/MockURLSession)
 [![CocoaPods](https://img.shields.io/cocoapods/v/MockURLSession.svg)](https://cocoapods.org/pods/MockURLSession)
 
-Are you a dependency injection devotee? Let's mock `NSURLSession` together.
+Are you a dependency injection devotee? Let's mock `URLSession` together.
 
 
 ## Features
 
-* No need to modify production code to mock `NSURLSession`
+* No need to modify production code to mock `URLSession`
 * Customizable URL matching logic to mock responses
 * Testable that the mocked responses are surely called
 
@@ -35,19 +35,19 @@ Note that this requires CocoaPods version 36, and your iOS deployment target to 
 
 #### Quick glance
 
-Let's take a case to test `MyApp` below.
+Let's look through an example to test `MyApp` below.
 
 ```swift
 class MyApp {
-    static let apiUrl = NSURL(string: "https://example.com/foo/bar")!
-    let session: NSURLSession
-    var data: NSData?
-    var error: NSError?
-    init(session: NSURLSession = NSURLSession.sharedSession()) {
+    static let apiUrl = URL(string: "https://example.com/foo/bar")!
+    let session: URLSession
+    var data: Data?
+    var error: Error?
+    init(session: URLSession = URLSession.shared) {
         self.session = session
     }
     func doSomething() {
-        session.dataTaskWithURL(MyApp.apiUrl) { (data, _, error) in
+        session.dataTask(with: MyApp.apiUrl) { (data, _, error) in
             self.data = data
             self.error = error
         }.resume()
@@ -66,19 +66,19 @@ and write testing by any flamewrorks you prefer sush as XCTest (Written by `prin
 ```swift
 // Initialization
 let session = MockURLSession()
-// Or, use shared instance as `NSURLSession` provides
-MockURLSession.sharedSession()
+// Or, use shared instance as `URLSession` provides
+// MockURLSession.sharedInstance
 
 // Setup a mock response
-let data = "Foo 123".dataUsingEncoding(NSUTF8StringEncoding)!
-session.registerMockResponse(MyApp.apiUrl, data:data)
+let data = "Foo 123".data(using: .utf8)!
+session.registerMockResponse(MyApp.apiUrl, data: data)
 
 // Inject the session to the target app code and the response will be mocked like below
 let app = MyApp(session: session)
 app.doSomething()
 
-print(NSString(data:app.data!, encoding:NSUTF8StringEncoding)!)  // Foo 123
-print(app.error)    // nil
+print(String(data:app.data!, encoding: .utf8)!)  // Foo 123
+print(app.error as Any)    // nil
 
 // Make sure that the data task is resumed in the app code
 print(session.resumedResponse(MyApp.apiUrl) != nil)  // true
@@ -89,19 +89,19 @@ print(session.resumedResponse(MyApp.apiUrl) != nil)  // true
 ```swift
 // Customize URL matching logic if you prefer
 class Normalizer: MockURLSessionNormalizer {
-    func normalizeUrl(url: NSURL) -> NSURL {
+    func normalize(url: URL) -> URL {
         // Fuzzy matching example
-        let components = NSURLComponents()
+        var components = URLComponents()
         components.host = url.host
         components.path = url.path
-        return components.URL!
+        return components.url!
     }
 }
 // Note that you should setup the normalizer before registering mocked response
-let data = NSKeyedArchiver.archivedDataWithRootObject(["username": "abc", "age": 20])
+let data = NSKeyedArchiver.archivedData(withRootObject: ["username": "abc", "age": 20])
 let session = MockURLSession()
 session.normalizer = Normalizer()
-session.registerMockResponse(MyApp.apiUrl, data:data)
+session.registerMockResponse(MyApp.apiUrl, data: data)
 ```
 
 ## Disclosure
@@ -112,9 +112,19 @@ session.registerMockResponse(MyApp.apiUrl, data:data)
 
 
 ## Development tips
+#### Prerequisite
+* [Bundler](http://bundler.io/)
+
+#### Get started
+Run test on your environment:
+
+```
+bundle install --path vendor/bundle
+bundle exec rake
+```
 
 #### A long way to bump up spec version
 1. Xcode: MockURLSession > Identity > Version
 1. Pod: `s.version` in *MockURLSession.podspec*
-1. Git: `git tag 1.0.0 && git push origin --tag`
+1. Git: `git tag 2.x.x && git push origin --tag`
 1. Release by `pod trunk push MockURLSession.podspec`

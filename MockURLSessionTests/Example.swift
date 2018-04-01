@@ -42,7 +42,6 @@ class Example: XCTestCase {
         let app = MyApp(session: session)
         app.doSomething()
         
-        
         print(String(data:app.data!, encoding: .utf8)!)  // Foo 123
         print(app.error as Any)    // nil
         
