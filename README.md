@@ -111,7 +111,7 @@ session.registerMockResponse(MyApp.apiUrl, data: data)
 * This module is inspired from the entry [*Mocking Classes You Don't Own · Masilotti\.com*](http://masilotti.com/testing-nsurlsession-input/#comment-2493597339) and its comments.
 
 
-## Development tips
+## Development Guidance
 #### Prerequisite
 * [Bundler](http://bundler.io/)
 
