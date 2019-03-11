@@ -111,7 +111,8 @@ session.registerMockResponse(MyApp.apiUrl, data: data)
 * This module is inspired from the entry [*Mocking Classes You Don't Own · Masilotti\.com*](http://masilotti.com/testing-nsurlsession-input/#comment-2493597339) and its comments.
 
 
-## Development tips
+## Contributing to MockURLSession
+
 #### Prerequisite
 * [Bundler](http://bundler.io/)
 
@@ -124,6 +125,9 @@ bundle exec rake
 ```
 
 #### A long way to bump up spec version
+
+Here's the release flow:
+
 1. Xcode: MockURLSession > Identity > Version
 1. Pod: `s.version` in *MockURLSession.podspec*
 1. Git: `git tag 2.x.x && git push origin --tag`
