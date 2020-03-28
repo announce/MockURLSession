@@ -14,7 +14,7 @@ task :test_ios do
   sh %q(
     xcodebuild test \
       -scheme MockURLSession \
-      -destination 'platform=iOS Simulator,name=iPhone 6'
+      -destination 'platform=iOS Simulator,name=iPhone 8'
   )
 end
 
