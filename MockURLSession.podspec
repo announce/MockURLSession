@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name          = "MockURLSession"
-  s.version       = "2.0.0"
+  s.version       = "3.0.0"
   s.summary       = "MockURLSession provides a way to mock NSURLSession."
   s.homepage      = "https://github.com/announce/MockURLSession"
   s.license       = { :type => "MIT" }
@@ -16,6 +16,9 @@ Pod::Spec.new do |s|
   s.source        = { :git => "https://github.com/announce/MockURLSession.git", :tag => s.version }
   s.source_files  = "#{s.name}/*.swift"
   s.requires_arc  = true
-  s.osx.deployment_target = "10.9"
-  s.ios.deployment_target = "8.0"
+  s.swift_versions = ["5.1"]
+  # https://support.apple.com/en-us/HT201260
+  s.osx.deployment_target = "10.14"
+  # https://support.apple.com/en-us/HT209084
+  s.ios.deployment_target = "12.4"
 end
